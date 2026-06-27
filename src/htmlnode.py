@@ -33,5 +33,20 @@ class LeafNode(HTMLNode):
         
         def __repr__(self):
             return f"LeafNode({self.tag}, {self.value}, {self.props})"
+
+class ParentNode(HTMLNode):
+    def __init__(self,tag, children:list, props:dict = None):
+        super().__init__(tag, None, children, props)
+    
+    def to_html(self):
+        if self.tag is None:
+            raise ValueError("Parent must have a tag")
+        elif self.children is None or self.children == []:
+            raise ValueError("Parent must have at least one child")
+        children_html = ""
+        for child in self.children:
+            children_html += child.to_html()
+        return f"<{self.tag}{self.props_to_html()}>{children_html}</{self.tag}>"
+       
                  
         
