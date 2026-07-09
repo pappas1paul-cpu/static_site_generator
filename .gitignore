@@ -1,2 +1,5 @@
 cool_tricks.txt
 __pycache__/
+.gitingore
+public/
+.gitignore
