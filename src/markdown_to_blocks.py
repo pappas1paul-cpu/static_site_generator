@@ -20,12 +20,12 @@ def markdown_to_blocks(markdown):
 def block_to_type(block):
     if block.startswith(("# ", "## ", "### ", "#### ", "##### ", "###### ")):
         return BlockType.HEADING
-    if block.startswith("```\n") and block.endswith("```"):
+    if block.startswith("```") and block.endswith("```"):
         return BlockType.CODE
     lines = block.split("\n")
     if all(line.startswith(">") or line.startswith("> ") for line in lines):
         return BlockType.QUOTE
-    if all(line.startswith("- ") for line in lines):
+    if all(line.startswith("- ") or line.startswith("* ") for line in lines):
         return BlockType.UNORDERED_LIST
     is_ordered = True
     for i, line in enumerate(lines):

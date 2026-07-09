@@ -17,7 +17,7 @@ def markdown_to_html_node(markdown):
             children.append(ParentNode("p", text_to_children(block)))
         elif block_type == BlockType.HEADING:
             level = len(block.split(" ")[0])
-            heading_text = block.lstrip("# ")
+            heading_text = block[level + 1:]
             children.append(ParentNode(f"h{level}", text_to_children(heading_text)))
         elif block_type == BlockType.CODE:
             content = block.strip("`").strip("\n") + "\n"
@@ -26,7 +26,7 @@ def markdown_to_html_node(markdown):
             clean_lines = [line.lstrip(">").strip() for line in block.split("\n")]
             children.append(ParentNode("blockquote", text_to_children(" ".join(clean_lines))))
         elif block_type == BlockType.UNORDERED_LIST:
-            list_items = [ParentNode("li", text_to_children(line.lstrip("- "))) for line in block.split("\n")]
+            list_items = [ParentNode("li", text_to_children(line[2:])) for line in block.split("\n")]
             children.append(ParentNode("ul", list_items))
         elif block_type == BlockType.ORDERED_LIST:
             list_items = [ParentNode("li", text_to_children(line.split(". ", 1)[1])) for line in block.split("\n")]
